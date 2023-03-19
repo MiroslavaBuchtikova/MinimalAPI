@@ -2,7 +2,7 @@ using AutoMapper;
 using MinimalApiFull.Dtos;
 using MinimalApiFull.Entities;
 
-namespace MinimalApiFull.Profilers;
+namespace MinimalApiFull.Profiles;
 
 public class MappingProfile : Profile
 {
