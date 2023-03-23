@@ -14,11 +14,9 @@ public class CustomerModuleV2 : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var customersVersionApi = app.NewVersionedApi("Customers");
-        var customersV2 = customersVersionApi.MapGroup("/api/v2").HasApiVersion(2.0)
-            .AddEndpointFilterFactory(ValidationFilter.ValidationFilterFactory);
+        var appGroup = app.NewVersionedApi("Customers").HasApiVersion(2.0).MapGroup("api/v2").AddEndpointFilterFactory(ValidationFilter.ValidationFilterFactory).RequireAuthorization();
         
-        customersV2.MapGet("/customers", async (CustomerService customerService) =>
+        appGroup.MapGet("/customers", async (CustomerService customerService) =>
             {
                 var customers = await customerService.GetCustomers();
                 return Results.Ok(customers);
@@ -28,14 +26,14 @@ public class CustomerModuleV2 : ICarterModule
                 Deprecated = true
             });
 
-        customersV2.MapGet("/customers/{id}", async (int id, CustomerDb db) =>
+        appGroup.MapGet("/customers/{id}", async (int id, CustomerDb db) =>
                 await db.Customers.FindAsync(id)
                     is Customer customer
                     ? Results.Ok(customer)
                     : Results.NotFound())
             .ExcludeFromDescription();
 
-        customersV2.MapPost("/customers", [Authorize]
+        appGroup.MapPost("/customers", [Authorize]
             async ([Validate] CustomerDto customerDto, CustomerDb db, IMapper mapper) =>
             {
                 var customer = mapper.Map<Customer>(customerDto);
@@ -51,7 +49,7 @@ public class CustomerModuleV2 : ICarterModule
                 return Results.Created($"/customers/{customer.Id}", customer);
             });
 
-        customersV2.MapPut("/customers/{id}",
+        appGroup.MapPut("/customers/{id}",
             async (int id, [Validate] CustomerDto customerDto, CustomerDb db, IMapper mapper) =>
             {
                 var customer = await db.Customers.FindAsync(id);
@@ -65,7 +63,7 @@ public class CustomerModuleV2 : ICarterModule
                 return Results.NoContent();
             });
 
-        customersV2.MapDelete("/customers/{id}", async (int id, CustomerDb db) =>
+        appGroup.MapDelete("/customers/{id}", async (int id, CustomerDb db) =>
         {
             if (await db.Customers.FindAsync(id) is Customer customer)
             {

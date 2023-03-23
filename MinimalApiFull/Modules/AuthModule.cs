@@ -14,30 +14,28 @@ public class AuthModule : ICarterModule
         app.MapPost("/security/getToken", [AllowAnonymous](IConfiguration configuration, IMemoryCache cache) =>
         {
             var cacheKey = "auth_token";
- 
+
             if (!cache.TryGetValue(cacheKey, out string jwtToken))
             {
-                var issuer = configuration.GetSection("Jwt:Issuer").ToString();
-                var audience = configuration.GetSection("Jwt:Audience").ToString();
-                var jwtTokenHandler = new JwtSecurityTokenHandler();
+                var issuer = configuration.GetSection("Jwt")["Issuer"];
+                var audience = configuration.GetSection("Jwt")["Audience"];
+                var secretKey = configuration.GetSection("Jwt")["Key"];
 
-                var key = Encoding.ASCII.GetBytes(configuration.GetSection("Jwt:Key").ToString());
+                var handler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes(secretKey);
 
-
-                var tokenDescriptor = new SecurityTokenDescriptor
+                var descriptor = new SecurityTokenDescriptor
                 {
-                    Expires = DateTime.UtcNow.AddHours(6),
-                    Audience = audience,
                     Issuer = issuer,
-                    SigningCredentials =
-                        new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature)
+                    Audience = audience,
+                    Expires = DateTime.UtcNow.AddMinutes(30),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
+                        SecurityAlgorithms.HmacSha256Signature)
                 };
+                var token = handler.CreateToken(descriptor);
 
-                var token = jwtTokenHandler.CreateToken(tokenDescriptor);
-
-                jwtToken = jwtTokenHandler.WriteToken(token);
-
-                cache.Set(cacheKey, jwtToken, TimeSpan.FromSeconds(10));
+                jwtToken = handler.WriteToken(token);
+                cache.Set(cacheKey, jwtToken, TimeSpan.FromSeconds(25));
             }
 
             return Results.Ok(jwtToken);
