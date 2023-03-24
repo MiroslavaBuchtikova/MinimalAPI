@@ -1,7 +1,5 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPIInitial", "WebAPIInitial\WebAPIInitial.csproj", "{C81DDBEC-0986-4CA9-A311-62E66F69C060}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinimalApiInitial", "MinimalApiInitial\MinimalApiInitial.csproj", "{B21B4DB1-F957-4D4A-8A46-AF8F3FC05F2E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinimalApiFull", "MinimalApiFull\MinimalApiFull.csproj", "{4B8C0022-2CBE-4504-9D7D-5F15F5B0613C}"
@@ -12,10 +10,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C81DDBEC-0986-4CA9-A311-62E66F69C060}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C81DDBEC-0986-4CA9-A311-62E66F69C060}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C81DDBEC-0986-4CA9-A311-62E66F69C060}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C81DDBEC-0986-4CA9-A311-62E66F69C060}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B21B4DB1-F957-4D4A-8A46-AF8F3FC05F2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B21B4DB1-F957-4D4A-8A46-AF8F3FC05F2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B21B4DB1-F957-4D4A-8A46-AF8F3FC05F2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
