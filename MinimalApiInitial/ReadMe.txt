@@ -1,0 +1,10 @@
+- Database
+- Endpoints
+- OpenAPI
+- DTO, automapper
+- Validation
+- Exceptions
+- Swagger versioning + carter
+- Authorization/Autentication
+- Cache
+- Logging

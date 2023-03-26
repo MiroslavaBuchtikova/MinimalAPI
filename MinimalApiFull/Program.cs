@@ -8,6 +8,7 @@ using MinimalApiFull.Middlewares;
 using MinimalApiFull.Persistence;
 using MinimalApiFull.Services;
 using MinimalApiFull.Swagger;
+using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,7 +38,12 @@ builder.Services.AddAuthentication().AddJwtBearer(o =>
 builder.Services.AddAuthorization();
 builder.Services.AddCarter();
 builder.Services.AddMemoryCache();
-
+builder.Host.UseSerilog((hostContext, services, configuration) =>
+{
+    configuration
+        .WriteTo.File("serilog-file.txt")
+        .WriteTo.Console();
+});
 var app = builder.Build();
 
 app.UseAuthentication();
