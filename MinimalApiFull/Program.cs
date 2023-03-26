@@ -6,7 +6,6 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using MinimalApiFull.Middlewares;
 using MinimalApiFull.Persistence;
-using MinimalApiFull.Services;
 using MinimalApiFull.Swagger;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -15,7 +14,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<CustomerDb>(opt => opt.UseInMemoryDatabase("CustomerList"));
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddScoped<CustomerService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddApiVersioning()
     .AddApiExplorer()

@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MinimalApiFull.Persistence;
-using MinimalApiFull.Services;
 
 namespace MinimalApiFull.Tests;
 
@@ -28,7 +27,6 @@ public class TestBase
                         var dbContext = new CustomerDb(dbContextOptions);
                         return dbContext;
                     });
-                    services.AddSingleton<CustomerService>();
                     services.BuildServiceProvider();
                 });
             });
